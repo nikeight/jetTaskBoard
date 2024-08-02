@@ -15,7 +15,12 @@ import com.jetapps.jettaskboard.model.BoardModel
 import com.jetapps.jettaskboard.model.CardModel
 import com.jetapps.jettaskboard.model.ListModel
 import com.jetapps.jettaskboard.successOr
+import com.jetapps.jettaskboard.usecase.board.CreateCardUseCase
+import com.jetapps.jettaskboard.usecase.board.CreateNewListUseCase
+import com.jetapps.jettaskboard.usecase.board.DeleteCardUseCase
+import com.jetapps.jettaskboard.usecase.board.GetBoardDetailsUseCase
 import com.jetapps.jettaskboard.usecase.board.GetLatestBackgroundImgUrlUseCase
+import com.jetapps.jettaskboard.usecase.board.UpdateCardUseCase
 import com.jetapps.jettaskboard.util.Board
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
@@ -27,7 +32,12 @@ import javax.inject.Inject
 @HiltViewModel
 class TaskBoardViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val getLatestBackgroundImgUrlUseCase: GetLatestBackgroundImgUrlUseCase
+    private val getLatestBackgroundImgUrlUseCase: GetLatestBackgroundImgUrlUseCase,
+    private val getBoardDetailsUseCase: GetBoardDetailsUseCase,
+    private val createCardUseCase: CreateCardUseCase,
+    private val updateCardUseCase: UpdateCardUseCase,
+    private val deleteCardUseCase: DeleteCardUseCase,
+    private val createNewListUseCase: CreateNewListUseCase,
 ) : ViewModel() {
 
     /**

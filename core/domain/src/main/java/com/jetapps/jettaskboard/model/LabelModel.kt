@@ -1,7 +1,7 @@
 package com.jetapps.jettaskboard.model
 
 data class LabelModel(
-    val id: Int,
+    val id: String,
     val labelName: String,
     val labelColor: Long
 )

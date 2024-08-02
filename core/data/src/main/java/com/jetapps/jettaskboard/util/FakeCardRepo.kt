@@ -14,27 +14,27 @@ const val OrangeLabel = 0xFFFFD180
 val Labels by lazy {
     listOf(
         LabelModel(
-            id = 0,
+            id = "0",
             labelName = "Architecture",
             labelColor = YellowLabel
         ),
         LabelModel(
-            id = 1,
+            id = "1",
             labelName = "Feature",
             labelColor = BlueLabel
         ),
         LabelModel(
-            id = 2,
+            id = "2",
             labelName = "Tests",
             labelColor = GreenLabel
         ),
         LabelModel(
-            id = 3,
+            id = "3",
             labelName = "CI/CD",
             labelColor = RedLabel
         ),
         LabelModel(
-            id = 4,
+            id = "4",
             labelName = "Library",
             labelColor = OrangeLabel
         )

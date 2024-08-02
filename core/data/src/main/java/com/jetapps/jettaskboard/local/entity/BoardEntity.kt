@@ -12,5 +12,6 @@ data class BoardEntity(
     val title: String,
     val description: String,
     @ColumnInfo(name = "work_space_id")
-    val workSpaceId: String
+    val workSpaceId: String,
+    val isFav : Int
 )

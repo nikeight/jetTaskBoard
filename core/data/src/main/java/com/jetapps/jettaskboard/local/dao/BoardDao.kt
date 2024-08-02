@@ -1,17 +1,21 @@
 package com.jetapps.jettaskboard.local.dao
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.jetapps.jettaskboard.local.entity.BoardEntity
+import androidx.room.Transaction
+import com.jetapps.jettaskboard.local.entity.CardEntity
+import com.jetapps.jettaskboard.local.entity.ListEntity
+import com.jetapps.jettaskboard.model.db.BoardWithListEntity
 
 @Dao
 interface BoardDao {
+    @Transaction
+    @Query("SELECT * FROM boardTable WHERE id = :boardId")
+    fun getBoardWithListsAndCards(boardId: Int): BoardWithListEntity
 
-    @Query("SELECT * FROM boardTable")
-    fun getAllBoards(): List<BoardEntity>
+    @Query("SELECT * FROM listTable WHERE id = :boardId")
+    fun getListsByBoardId(boardId: Int): List<ListEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertBoard(board: BoardEntity)
+    @Query("SELECT * FROM cardTable WHERE id = :listId")
+    fun getCardsByListId(listId: Int): List<CardEntity>
 }

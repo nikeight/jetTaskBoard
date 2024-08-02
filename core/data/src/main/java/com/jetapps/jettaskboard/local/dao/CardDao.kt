@@ -1,9 +1,11 @@
 package com.jetapps.jettaskboard.local.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.jetapps.jettaskboard.local.entity.CardEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -27,4 +29,10 @@ interface CardDao {
         boardId: String,
         listId: String
     ): Flow<List<CardEntity>>
+
+    @Update
+    fun updateCard(card: CardEntity)
+
+    @Delete
+    fun deleteCard(card: CardEntity)
 }

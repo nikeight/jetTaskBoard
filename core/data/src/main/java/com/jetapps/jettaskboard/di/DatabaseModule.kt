@@ -2,7 +2,7 @@ package com.jetapps.jettaskboard.di
 
 import android.content.Context
 import androidx.room.Room
-import com.jetapps.jettaskboard.local.dao.BoardDao
+import com.jetapps.jettaskboard.local.dao.DashboardDao
 import com.jetapps.jettaskboard.local.dao.CardDao
 import com.jetapps.jettaskboard.local.dao.LabelDao
 import com.jetapps.jettaskboard.local.dao.ListDao
@@ -29,7 +29,7 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun providesBoardDao(database: JtbDatabase): BoardDao = database.boardDao()
+    fun providesBoardDao(database: JtbDatabase): DashboardDao = database.boardDao()
 
     @Provides
     @Singleton

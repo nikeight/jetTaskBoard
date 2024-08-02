@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jetapps.jettaskboard.model.Board
 import com.jetapps.jettaskboard.model.BoardListModel
+import com.jetapps.jettaskboard.usecase.dashboard.FetchAllBoardsUseCase
+import com.jetapps.jettaskboard.usecase.dashboard.FetchProfileUseCase
 import com.jetapps.jettaskboard.util.BoardList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
@@ -15,7 +17,20 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DashboardViewModel @Inject constructor() : ViewModel() {
+class DashboardViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+    private val fetchAllBoardsUseCase: FetchAllBoardsUseCase,
+    private val fetchProfileUseCase: FetchProfileUseCase,
+) : ViewModel() {
+
+    init {
+        viewModelScope.launch {
+            fetchAllBoardsUseCase.invoke()
+        }
+        viewModelScope.launch {
+            fetchAllBoardsUseCase.invoke()
+        }
+    }
 
     var toggleDrawerContent = mutableStateOf(true)
 
