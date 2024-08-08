@@ -4,11 +4,11 @@ import com.jetapps.jettaskboard.local.entity.BoardEntity
 import com.jetapps.jettaskboard.local.entity.CardEntity
 import com.jetapps.jettaskboard.local.entity.LabelEntity
 import com.jetapps.jettaskboard.local.entity.ListEntity
-import com.jetapps.jettaskboard.model.db.BoardWithListEntity
+import com.jetapps.jettaskboard.model.db.BoardWithLists
 import kotlinx.coroutines.flow.Flow
 
 interface DatabaseSource {
-    suspend fun getBoard(boardId : String) : Flow<BoardWithListEntity>
+    suspend fun getBoard(boardId : String) : Flow<BoardWithLists>
     suspend fun getBoards() : Flow<List<BoardEntity>>
     suspend fun updateCard(cardEntity: CardEntity)
     suspend fun createCard(cardEntity: CardEntity)

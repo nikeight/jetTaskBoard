@@ -15,7 +15,7 @@ class CardMapper @Inject constructor(
             entity.description,
             entity.coverImageUrl,
             entity.boardId,
-            entity.listId,
+            entity.listId.toString(),
             entity.authorId,
             entity.startDate,
             entity.dueDate
@@ -24,13 +24,13 @@ class CardMapper @Inject constructor(
 
     override fun mapToData(model: CardEntity): CardModel {
         return CardModel(
-            model.id,
+            model.cardId,
             model.title,
             model.description,
             model.coverImageUrl,
             listOf(),
             model.boardId,
-            model.listId,
+            model.listId?.toInt(),
             model.authorId,
             model.startDate,
             model.dueDate

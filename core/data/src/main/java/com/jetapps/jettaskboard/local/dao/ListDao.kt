@@ -19,6 +19,6 @@ interface ListDao {
     @Delete
     fun deleteList(list: ListEntity)
 
-    @Query("SELECT * FROM listTable where board_id = :boardId")
+    @Query("SELECT * FROM listTable where boardId = :boardId")
     fun getAllListsForBoard(boardId: String): List<ListEntity>
 }

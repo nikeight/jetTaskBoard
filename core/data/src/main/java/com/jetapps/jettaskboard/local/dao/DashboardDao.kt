@@ -8,7 +8,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.jetapps.jettaskboard.local.entity.BoardEntity
-import com.jetapps.jettaskboard.model.db.BoardWithListEntity
+import com.jetapps.jettaskboard.model.db.BoardWithLists
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -18,8 +18,8 @@ interface DashboardDao {
     fun getAllBoards(): Flow<List<BoardEntity>>
 
     @Transaction
-    @Query("SELECT * FROM BOARDTABLE WHERE id = :boardId")
-    fun getBoardDetails(boardId : String) : Flow<BoardWithListEntity>
+    @Query("SELECT * FROM BOARDTABLE WHERE boardId = :boardId")
+    fun getBoardDetails(boardId : String) : Flow<BoardWithLists>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertBoard(board: BoardEntity)

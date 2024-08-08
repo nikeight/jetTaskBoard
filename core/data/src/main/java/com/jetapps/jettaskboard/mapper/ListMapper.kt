@@ -9,7 +9,7 @@ class ListMapper @Inject constructor(
 ) : EntityMapper<ListEntity, ListModel> {
     override fun mapToDomain(entity: ListModel): ListEntity {
         return ListEntity(
-            id = entity.id.toString(),
+            listId = entity.id.toString(),
             title = entity.title,
             boardId = entity.id.toString(),
         )
@@ -17,7 +17,7 @@ class ListMapper @Inject constructor(
 
     override fun mapToData(model: ListEntity): ListModel {
         return ListModel(
-            id = model.id.toInt(),
+            id = model.listId.toInt(),
             title = model.title,
         )
     }
