@@ -14,9 +14,8 @@ data class CardEntity(
     val description: String?,
     @ColumnInfo(name = "column_image_url")
     val coverImageUrl: String?,
-    @ColumnInfo(name = "board_id")
-    val boardId: String?,
-    val listId: String,
+    val boardId: Int,
+    val listId: Int,
     @ColumnInfo(name = "author_id")
     val authorId: String?,
     @ColumnInfo(name = "start_date")

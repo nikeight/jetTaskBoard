@@ -6,31 +6,31 @@ import javax.inject.Inject
 
 class CardMapper @Inject constructor(
     private val labelMapper: LabelMapper,
-) : EntityMapper<CardEntity, CardModel> {
+) : EntityMapper<CardModel,CardEntity> {
 
-    override fun mapToDomain(entity: CardModel): CardEntity {
-        return CardEntity(
-            entity.id,
+    override fun mapToDomain(entity: CardEntity): CardModel {
+        return CardModel(
+            entity.cardId,
             entity.title,
             entity.description,
             entity.coverImageUrl,
+            listOf(),
             entity.boardId,
-            entity.listId.toString(),
+            entity.listId,
             entity.authorId,
             entity.startDate,
             entity.dueDate
         )
     }
 
-    override fun mapToData(model: CardEntity): CardModel {
-        return CardModel(
-            model.cardId,
+    override fun mapToData(model: CardModel): CardEntity {
+        return CardEntity(
+            model.id,
             model.title,
             model.description,
             model.coverImageUrl,
-            listOf(),
             model.boardId,
-            model.listId?.toInt(),
+            model.listId,
             model.authorId,
             model.startDate,
             model.dueDate

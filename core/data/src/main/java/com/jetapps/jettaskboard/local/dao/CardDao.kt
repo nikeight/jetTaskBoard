@@ -21,10 +21,10 @@ interface CardDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCard(card: CardEntity)
 
-    @Query("SELECT * FROM cardTable where board_id = :boardId")
+    @Query("SELECT * FROM cardTable where boardId = :boardId")
     fun getAllCardsForBoard(boardId: String): Flow<List<CardEntity>>
 
-    @Query("SELECT * FROM cardTable where board_id = :boardId and list_id = :listId")
+    @Query("SELECT * FROM cardTable where boardId = :boardId and listId = :listId")
     fun getAllCardsForBoardAndList(
         boardId: String,
         listId: String

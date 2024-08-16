@@ -9,6 +9,12 @@ import com.jetapps.jettaskboard.local.entity.CardEntity
 import com.jetapps.jettaskboard.local.entity.LabelEntity
 import com.jetapps.jettaskboard.local.entity.ListEntity
 
+@Entity(primaryKeys = ["listId", "cardId"])
+data class ListWithCardCrossRef(
+    val listId: Int,
+    val cardId: Int,
+)
+
 data class BoardWithLists(
     @Embedded val boardEntity: BoardEntity,
     @Relation(
@@ -16,7 +22,7 @@ data class BoardWithLists(
         parentColumn = "boardId",
         entityColumn = "boardId",
     )
-    val boardList: List<ListWithCards>
+    val boardList: List<ListWithCards> = emptyList()
 )
 
 data class ListWithCards(
@@ -24,18 +30,7 @@ data class ListWithCards(
     @Relation(
         parentColumn = "listId",
         entityColumn = "listId",
-        associateBy = Junction(ListWithCardEntity::class)
+        associateBy = Junction(ListWithCardCrossRef::class)
     )
-    val cardList: List<CardEntity>
-)
-
-data class CardWithLabelEntity(
-    val id: String,
-    val labelList: List<LabelEntity>
-)
-
-@Entity(primaryKeys = ["listId,cardId"])
-data class ListWithCardEntity(
-    val listId: String,
-    val cardId: String,
+    val cardList: List<CardEntity> = emptyList()
 )

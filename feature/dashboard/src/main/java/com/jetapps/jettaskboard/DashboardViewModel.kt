@@ -18,7 +18,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val fetchAllBoardsUseCase: FetchAllBoardsUseCase,
     private val fetchProfileUseCase: FetchProfileUseCase,
 ) : ViewModel() {

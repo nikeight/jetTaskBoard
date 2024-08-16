@@ -7,8 +7,10 @@ import androidx.room.PrimaryKey
     tableName = "boardTable"
 )
 data class BoardEntity(
-    @PrimaryKey val boardId: String,
+    @PrimaryKey
+    val boardId: Int,
     val title: String,
     val description: String,
-    val isFav : Int
+    val isFav : Int,
+    val workSpaceId : Int,
 )

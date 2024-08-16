@@ -13,10 +13,4 @@ interface BoardDao {
     @Transaction
     @Query("SELECT * FROM boardTable WHERE boardId = :boardId")
     fun getBoardWithListsAndCards(boardId: Int): BoardWithLists
-
-    @Query("SELECT * FROM listTable WHERE listId = :boardId")
-    fun getListsByBoardId(boardId: Int): List<ListEntity>
-
-    @Query("SELECT * FROM cardTable WHERE cardId = :listId")
-    fun getCardsByListId(listId: Int): List<CardEntity>
 }

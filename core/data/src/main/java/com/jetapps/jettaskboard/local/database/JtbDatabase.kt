@@ -12,6 +12,7 @@ import com.jetapps.jettaskboard.local.entity.CardEntity
 import com.jetapps.jettaskboard.local.entity.LabelEntity
 import com.jetapps.jettaskboard.local.entity.ListEntity
 import com.jetapps.jettaskboard.local.entity.MemberEntity
+import com.jetapps.jettaskboard.model.db.ListWithCardCrossRef
 
 @Database(
     entities = [
@@ -20,7 +21,8 @@ import com.jetapps.jettaskboard.local.entity.MemberEntity
         BoardEntity::class,
         LabelEntity::class,
         MemberEntity::class,
-        AttachmentEntity::class
+        AttachmentEntity::class,
+        ListWithCardCrossRef::class
     ],
     version = 1,
     exportSchema = false

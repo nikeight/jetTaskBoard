@@ -8,7 +8,7 @@ import javax.inject.Inject
 class LabelMapper @Inject constructor() : EntityMapper<LabelEntity, LabelModel> {
     override fun mapToDomain(entity: LabelModel): LabelEntity {
         return LabelEntity(
-            entity.id,
+            entity.id.toInt(),
             entity.labelName,
             entity.labelColor.toString()
         )
@@ -17,7 +17,7 @@ class LabelMapper @Inject constructor() : EntityMapper<LabelEntity, LabelModel> 
 
     override fun mapToData(model: LabelEntity): LabelModel {
         return LabelModel(
-            model.id,
+            model.id.toString(),
             labelName = model.labelName,
             labelColor = Color.parseColor(model.labelColor).toLong()
         )

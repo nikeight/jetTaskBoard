@@ -48,14 +48,14 @@ class BoardRepoImpl @Inject constructor(
     }
 
     override suspend fun updateCard(cardModel: CardModel) {
-        databaseSource.updateCard(cardMapper.mapToDomain(cardModel))
+        databaseSource.updateCard(cardMapper.mapToData(cardModel))
     }
 
     override suspend fun deleteCard(cardModel: CardModel) {
-        databaseSource.deleteCard(cardMapper.mapToDomain(cardModel))
+        databaseSource.deleteCard(cardMapper.mapToData(cardModel))
     }
 
     override suspend fun createCard(cardModel: CardModel) {
-        databaseSource.createCard(cardMapper.mapToDomain(cardModel))
+        databaseSource.createCard(cardMapper.mapToData(cardModel))
     }
 }

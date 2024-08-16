@@ -31,7 +31,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TaskBoardViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val getLatestBackgroundImgUrlUseCase: GetLatestBackgroundImgUrlUseCase,
     private val getBoardDetailsUseCase: GetBoardDetailsUseCase,
     private val createCardUseCase: CreateCardUseCase,
@@ -111,7 +110,16 @@ class TaskBoardViewModel @Inject constructor(
             totalCards += 1
             val newCardIndex = totalCards
             _lists.find { it.id == listId }?.cards?.add(
-                CardModel(id = newCardIndex, title = "New Card", listId = listId)
+                CardModel(
+                    id = newCardIndex,
+                    title = "New Card",
+                    listId = listId,
+                    description = "",
+                    coverImageUrl = "",
+                    labels = emptyList(),
+                    boardId = 0,
+                    authorId = ""
+                )
             )
         }
     }
