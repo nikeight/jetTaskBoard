@@ -8,6 +8,7 @@ import com.jetapps.jettaskboard.local.entity.BoardEntity
 import com.jetapps.jettaskboard.local.entity.CardEntity
 import com.jetapps.jettaskboard.local.entity.LabelEntity
 import com.jetapps.jettaskboard.local.entity.ListEntity
+import com.jetapps.jettaskboard.model.BoardModel
 import com.jetapps.jettaskboard.model.db.BoardWithLists
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -18,6 +19,11 @@ class DatabaseSourceImpl @Inject constructor(
     private val listDao: ListDao,
     private val labelDao: LabelDao
 ) : DatabaseSource {
+
+    override suspend fun createBoard(boardEntity: BoardEntity) {
+        dashboardDao.insertBoard(boardEntity)
+    }
+
     override suspend fun getBoard(boardId: String): Flow<BoardWithLists> {
         return dashboardDao.getBoardDetails(boardId)
     }

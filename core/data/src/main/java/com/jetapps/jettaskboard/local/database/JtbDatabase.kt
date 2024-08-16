@@ -28,7 +28,6 @@ import com.jetapps.jettaskboard.model.db.ListWithCardCrossRef
     exportSchema = false
 )
 abstract class JtbDatabase : RoomDatabase() {
-
     abstract fun boardDao(): DashboardDao
     abstract fun listDao(): ListDao
     abstract fun cardDao(): CardDao
