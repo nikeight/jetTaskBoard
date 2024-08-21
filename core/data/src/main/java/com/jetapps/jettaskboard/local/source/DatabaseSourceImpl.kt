@@ -10,7 +10,9 @@ import com.jetapps.jettaskboard.local.entity.LabelEntity
 import com.jetapps.jettaskboard.local.entity.ListEntity
 import com.jetapps.jettaskboard.model.BoardModel
 import com.jetapps.jettaskboard.model.db.BoardWithLists
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class DatabaseSourceImpl @Inject constructor(
@@ -32,12 +34,22 @@ class DatabaseSourceImpl @Inject constructor(
         return dashboardDao.getAllBoards()
     }
 
+    override suspend fun getAllLists(): List<ListEntity> {
+        return dashboardDao.getAllLists()
+    }
+
+    override suspend fun getAllListsRelatedToBoard(boardId: Int): List<ListEntity> {
+        return dashboardDao.getAllBoardRelatedLists(boardId)
+    }
+
     override suspend fun updateCard(cardEntity: CardEntity) {
         cardDao.updateCard(cardEntity)
     }
 
     override suspend fun createCard(cardEntity: CardEntity) {
-        cardDao.insertCard(cardEntity)
+        withContext(Dispatchers.IO) {
+            cardDao.insertCard(cardEntity)
+        }
     }
 
     override suspend fun deleteCard(cardEntity: CardEntity) {

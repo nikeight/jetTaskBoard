@@ -26,6 +26,7 @@ import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -53,6 +54,12 @@ fun CreateCardRoute(
     isExpandedScreen: Boolean,
     onCancelClick: () -> Unit
 ) {
+
+    LaunchedEffect(true){
+        viewModel.fetchBoards(1)
+        viewModel.fetchLists(null)
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -66,7 +73,9 @@ fun CreateCardRoute(
                 },
                 title = { Text(text = "New Card") },
                 actions = {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = {
+                        viewModel.submitCard()
+                    }) {
                         Icon(
                             Icons.Default.Check,
                             contentDescription = ""

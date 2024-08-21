@@ -54,7 +54,7 @@ fun CardDetailExpandedPane(
     ) {
         val members by remember {
             mutableStateOf(
-                viewModel.cardModel.value.authorName ?: "Members...",
+                viewModel.cardModel.authorName ?: "Members...",
             )
         }
         ItemRow(

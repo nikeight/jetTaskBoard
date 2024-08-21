@@ -81,8 +81,8 @@ fun CardDetailsRoute(
                     scrollState = scrollState,
                     isExpandedScreen,
                     onCancelClick,
-                    viewModel.cardModel.value.coverImageUrl,
-                    viewModel.cardModel.value.title
+                    viewModel.cardModel.coverImageUrl,
+                    viewModel.cardModel.title
                 )
             }
         ) {

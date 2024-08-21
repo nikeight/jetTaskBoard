@@ -79,12 +79,14 @@ object RepoModule {
     fun provideDashboardRepo(
         databaseSource: DatabaseSource,
         boardMapper: BoardMapper,
-        cardMapper: CardMapper
+        cardMapper: CardMapper,
+        listMapper: ListMapper,
     ): DashboardRepo {
         return DashboardRepoImpl(
             databaseSource = databaseSource,
             boardMapper = boardMapper,
-            cardMapper = cardMapper
+            cardMapper = cardMapper,
+            listMapper = listMapper
         )
     }
 }

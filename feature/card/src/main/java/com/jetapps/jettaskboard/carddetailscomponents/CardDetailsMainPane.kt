@@ -79,14 +79,14 @@ fun CardDetailsMainPane(
 
             androidx.compose.material.Text(
                 modifier = Modifier.padding(16.dp),
-                text = viewModel.cardModel.value.title ?: "Backlog",
+                text = viewModel.cardModel.title ?: "Backlog",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
 
             androidx.compose.material.Text(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                text = "${(viewModel.cardModel.value.boardName) ?: "Praxis"} in list ${(viewModel.cardModel.value.listName) ?: "Backlog"}",
+                text = "${(viewModel.cardModel.boardName) ?: "Praxis"} in list ${(viewModel.cardModel.listName) ?: "Backlog"}",
                 fontSize = 16.sp
             )
 
@@ -112,14 +112,14 @@ fun CardDetailsMainPane(
         ) {
             Text(
                 modifier = Modifier.padding(16.dp),
-                text = viewModel.cardModel.value.title ?: "Backlog",
+                text = viewModel.cardModel.title ?: "Backlog",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
 
             Text(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                text = "${(viewModel.cardModel.value.boardName) ?: "Praxis"} in list ${(viewModel.cardModel.value.listName) ?: "Backlog"}",
+                text = "${(viewModel.cardModel.boardName) ?: "Praxis"} in list ${(viewModel.cardModel.listName) ?: "Backlog"}",
                 fontSize = 16.sp
             )
 
@@ -137,7 +137,7 @@ fun CardDetailsMainPane(
 
             val members by rememberSaveable {
                 mutableStateOf(
-                    viewModel.cardModel.value.authorName ?: "Members..."
+                    viewModel.cardModel.authorName ?: "Members..."
                 )
             }
             ItemRow(
