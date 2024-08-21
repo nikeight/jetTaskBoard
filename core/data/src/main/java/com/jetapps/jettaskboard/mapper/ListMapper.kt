@@ -17,7 +17,7 @@ class ListMapper @Inject constructor(
 
     override fun mapToData(model: ListEntity): ListModel {
         return ListModel(
-            id = model.listId.toInt(),
+            id = model.listId,
             title = model.title,
         )
     }

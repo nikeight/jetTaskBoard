@@ -143,9 +143,15 @@ class TaskBoardViewModel @Inject constructor(
     }
 
     fun addNewList() {
+        val model = ListModel(id = _lists.size + 1, title = "New List")
         _lists.add(
-            ListModel(id = _lists.size + 1, title = "New List")
+            model
         )
+        viewModelScope.launch {
+            createNewListUseCase.invoke(
+                model
+            )
+        }
     }
 
     private fun getFakeBoard(): Result<BoardModel> {

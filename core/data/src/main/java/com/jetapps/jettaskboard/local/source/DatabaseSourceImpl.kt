@@ -57,7 +57,9 @@ class DatabaseSourceImpl @Inject constructor(
     }
 
     override suspend fun createNewList(listEntity: ListEntity) {
-        listDao.insertList(listEntity)
+        withContext(Dispatchers.IO) {
+            listDao.insertList(listEntity)
+        }
     }
 
     override suspend fun deleteList(listEntity: ListEntity) {

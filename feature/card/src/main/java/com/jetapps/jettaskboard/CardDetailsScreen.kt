@@ -1,6 +1,7 @@
 @file:OptIn(
     ExperimentalMaterial3AdaptiveApi::class,
     ExperimentalPermissionsApi::class,
+    ExperimentalMaterial3AdaptiveApi::class,
 )
 
 package com.jetapps.jettaskboard
