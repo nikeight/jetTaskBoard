@@ -22,13 +22,11 @@ class DashboardRepoImpl @Inject constructor(
     private val listMapper: ListMapper,
 ) : DashboardRepo {
     override suspend fun fetchAllBoards(): Flow<List<BoardModel>> {
-        return flow {
-            databaseSource.getBoards().map { source ->
-                source.forEach { model ->
+        return databaseSource.getBoards().map { source ->
+                source.map { model ->
                     boardMapper.mapToData(model)
                 }
             }
-        }
     }
 
     override suspend fun fetchProfile(): ProfileModel {
