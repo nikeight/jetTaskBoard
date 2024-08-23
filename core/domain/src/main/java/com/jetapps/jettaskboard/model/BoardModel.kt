@@ -8,6 +8,8 @@ data class BoardModel(
 )
 
 data class BoardWithListAndCard(
-    val boardModel: BoardModel,
+    val boardId : Int,
+    val boardTitle : String,
+    val isFav: Boolean,
     val listModel: List<ListModel>,
 )

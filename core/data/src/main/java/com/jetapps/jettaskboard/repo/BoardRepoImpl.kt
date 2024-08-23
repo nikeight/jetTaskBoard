@@ -1,5 +1,6 @@
 package com.jetapps.jettaskboard.repo
 
+import android.util.Log
 import com.jetapps.jettaskboard.local.datastore.PreferenceDataStoreSource
 import com.jetapps.jettaskboard.local.source.DatabaseSource
 import com.jetapps.jettaskboard.mapper.BoardMapper
@@ -35,8 +36,11 @@ class BoardRepoImpl @Inject constructor(
      */
     override suspend fun getBoardDetails(boardId: Int): Flow<BoardWithListAndCard> {
         return databaseSource.getBoard(boardId).map { boardWithLists ->
+            Log.d("DAO_RELATION", "getBoardDetails: $boardWithLists")
             BoardWithListAndCard(
-                boardModel = boardMapper.mapToData(boardWithLists.boardEntity),
+                boardId = boardWithLists.boardEntity.boardId,
+                boardTitle = boardWithLists.boardEntity.title,
+                isFav = boardWithLists.boardEntity.isFav == 1,
                 listModel = boardWithLists.boardList.map { listWithCards ->
                     ListModel(
                         listId = listWithCards.columnList.listId,

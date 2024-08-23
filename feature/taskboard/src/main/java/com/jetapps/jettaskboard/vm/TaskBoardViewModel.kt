@@ -83,7 +83,7 @@ class TaskBoardViewModel @Inject constructor(
                 .distinctUntilChanged()
                 .collect { result ->
                     println(result)
-                    boardTitle = result.boardModel.title
+                    boardTitle = result.boardTitle
                     // Executed for once when ui is loaded
                     _lists.emit(
                         result.listModel

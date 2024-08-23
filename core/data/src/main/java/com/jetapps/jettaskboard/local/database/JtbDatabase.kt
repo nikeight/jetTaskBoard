@@ -22,7 +22,7 @@ import com.jetapps.jettaskboard.model.db.ListWithCardCrossRef
         LabelEntity::class,
         MemberEntity::class,
         AttachmentEntity::class,
-        ListWithCardCrossRef::class
+//        ListWithCardCrossRef::class
     ],
     version = 1,
     exportSchema = false

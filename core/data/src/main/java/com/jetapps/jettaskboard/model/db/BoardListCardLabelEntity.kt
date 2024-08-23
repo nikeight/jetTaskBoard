@@ -15,6 +15,12 @@ data class ListWithCardCrossRef(
     val cardId: Int,
 )
 
+/**
+ * A board can have multiple Lists
+ * thus, it follows the `one-to-many` relationship
+ * In a relation with same `ids` a board can have n lists
+ * but many list can't have n boards
+ */
 data class BoardWithLists(
     @Embedded val boardEntity: BoardEntity,
     @Relation(
@@ -25,12 +31,18 @@ data class BoardWithLists(
     val boardList: List<ListWithCards> = emptyList()
 )
 
+/**
+ * A list can have multiple Cards
+ * thus, it also follows the `one-to-many` relationship
+ * In a relation with same `ids` a list can have n cards
+ * but many cards can't have n lists.
+ */
 data class ListWithCards(
     @Embedded val columnList: ListEntity,
     @Relation(
         parentColumn = "listId",
         entityColumn = "listId",
-        associateBy = Junction(ListWithCardCrossRef::class)
+        entity = CardEntity::class
     )
     val cardList: List<CardEntity> = emptyList()
 )
