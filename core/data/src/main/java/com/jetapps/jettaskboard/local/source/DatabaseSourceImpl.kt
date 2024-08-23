@@ -26,7 +26,7 @@ class DatabaseSourceImpl @Inject constructor(
         dashboardDao.insertBoard(boardEntity)
     }
 
-    override suspend fun getBoard(boardId: String): Flow<BoardWithLists> {
+    override suspend fun getBoard(boardId: Int): Flow<BoardWithLists> {
         return dashboardDao.getBoardDetails(boardId)
     }
 

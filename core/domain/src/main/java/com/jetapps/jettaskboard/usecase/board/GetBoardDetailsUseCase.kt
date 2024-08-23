@@ -7,5 +7,5 @@ class GetBoardDetailsUseCase @Inject constructor(
     private val boardRepo: BoardRepo
 ) {
 
-    suspend operator fun invoke(id: String) = boardRepo.getBoardDetails(id)
+    suspend operator fun invoke(id: Int) = boardRepo.getBoardDetails(id)
 }

@@ -4,13 +4,11 @@ import com.jetapps.jettaskboard.local.datastore.PreferenceDataStoreSource
 import com.jetapps.jettaskboard.local.source.DatabaseSource
 import com.jetapps.jettaskboard.mapper.BoardMapper
 import com.jetapps.jettaskboard.mapper.CardMapper
-import com.jetapps.jettaskboard.mapper.LabelMapper
 import com.jetapps.jettaskboard.mapper.ListMapper
-import com.jetapps.jettaskboard.model.BoardModel
+import com.jetapps.jettaskboard.model.BoardWithListAndCard
 import com.jetapps.jettaskboard.model.CardModel
 import com.jetapps.jettaskboard.model.ListModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -30,12 +28,26 @@ class BoardRepoImpl @Inject constructor(
         preferenceDataStoreSource.updateBackgroundImgUri(string)
     }
 
-    override suspend fun getBoardDetails(boardId: String): Flow<BoardModel> {
-//        return databaseSource.getBoard(boardId).map {
-//            boardMapper.mapToData(it)
-//        }
-        return flow {
-
+    /**
+     * TODO
+     * This task can be expensive as it loads lots of data once and Map each property
+     * Need to explore more and check for better solution.
+     */
+    override suspend fun getBoardDetails(boardId: Int): Flow<BoardWithListAndCard> {
+        return databaseSource.getBoard(boardId).map { boardWithLists ->
+            BoardWithListAndCard(
+                boardModel = boardMapper.mapToData(boardWithLists.boardEntity),
+                listModel = boardWithLists.boardList.map { listWithCards ->
+                    ListModel(
+                        listId = listWithCards.columnList.listId,
+                        title = listWithCards.columnList.title,
+                        cards = listWithCards.cardList.map { cardEntity ->
+                            cardMapper.mapToDomain(cardEntity)
+                        }.toMutableList(),
+                        boardId = listWithCards.columnList.boardId
+                    )
+                }
+            )
         }
     }
 

@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
     tableName = "listTable",
 )
 data class ListEntity(
-    @PrimaryKey
-    val listId: Int,
+    @PrimaryKey(autoGenerate = true)
+    val listId: Int = 0,
     val title: String,
     val boardId: Int
 )

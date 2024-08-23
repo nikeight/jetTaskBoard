@@ -19,8 +19,8 @@ interface DashboardDao {
     fun getAllBoards(): Flow<List<BoardEntity>>
 
     @Transaction
-    @Query("SELECT * FROM BOARDTABLE WHERE boardId = :boardId")
-    fun getBoardDetails(boardId: String): Flow<BoardWithLists>
+    @Query("SELECT * FROM boardTable WHERE boardId = :boardId")
+    fun getBoardDetails(boardId: Int): Flow<BoardWithLists>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertBoard(board: BoardEntity)

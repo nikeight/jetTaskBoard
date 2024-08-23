@@ -6,3 +6,8 @@ data class BoardModel(
     val lists: List<ListModel> = emptyList(),
     val isFav: Boolean = false,
 )
+
+data class BoardWithListAndCard(
+    val boardModel: BoardModel,
+    val listModel: List<ListModel>,
+)

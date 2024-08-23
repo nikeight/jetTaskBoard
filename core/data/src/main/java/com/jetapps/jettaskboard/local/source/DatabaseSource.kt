@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface DatabaseSource {
     suspend fun createBoard(boardEntity: BoardEntity)
-    suspend fun getBoard(boardId : String) : Flow<BoardWithLists>
+    suspend fun getBoard(boardId : Int) : Flow<BoardWithLists>
     suspend fun getBoards() : Flow<List<BoardEntity>>
     suspend fun getAllLists() : List<ListEntity>
     suspend fun getAllListsRelatedToBoard(boardId : Int) : List<ListEntity>

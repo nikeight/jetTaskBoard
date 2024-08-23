@@ -9,16 +9,16 @@ class ListMapper @Inject constructor(
 ) : EntityMapper<ListEntity, ListModel> {
     override fun mapToDomain(entity: ListModel): ListEntity {
         return ListEntity(
-            listId = entity.id,
             title = entity.title,
-            boardId = entity.id,
+            boardId = entity.boardId,
         )
     }
 
     override fun mapToData(model: ListEntity): ListModel {
         return ListModel(
-            id = model.listId,
+            listId = model.listId,
             title = model.title,
+            boardId = model.boardId
         )
     }
 }

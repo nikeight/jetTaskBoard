@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jetapps.jettaskboard.model.CardModel
 import com.jetapps.jettaskboard.model.LabelModel
-import com.jetapps.jettaskboard.model.ListModel
 import com.jetapps.jettaskboard.state.CardDetailState
 import com.jetapps.jettaskboard.theme.LabelBlue
 import com.jetapps.jettaskboard.theme.LabelGreen

@@ -157,19 +157,22 @@ val Board = BoardModel(
     title = "JetTaskBoard",
     lists = listOf(
         ListModel(
-            id = 0,
+            listId = 0,
             title = "Backlog",
-            cards = CardList_1.toMutableList()
+            cards = CardList_1.toMutableList(),
+            boardId = 0
         ),
         ListModel(
-            id = 1,
+            listId = 1,
             title = "In progress",
-            cards = CardList_2.toMutableList()
+            cards = CardList_2.toMutableList(),
+            boardId = 0
         ),
         ListModel(
-            id = 2,
+            listId = 2,
             title = "Completed",
-            cards = CardList_3.toMutableList()
+            cards = CardList_3.toMutableList(),
+            boardId = 0
         )
     )
 )
