@@ -28,6 +28,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -61,7 +62,8 @@ fun TaskBoardRoute(
     navigateToCreateCard: (String) -> Unit = {},
     navigateToChangeBackgroundScreen: (String) -> Unit = {},
     backgroundColor: Color = MaterialTheme.colors.surface,
-    viewModel: TaskBoardViewModel = hiltViewModel()
+    viewModel: TaskBoardViewModel = hiltViewModel(),
+    boardId: Long? = 0
 ) {
     val expandedScreenState = viewModel.drawerScreenState.value
     val scaffoldState = rememberScaffoldState()

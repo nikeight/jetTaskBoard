@@ -2,7 +2,9 @@ package com.jetapps.jettaskboard.createboard
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -18,31 +20,32 @@ import com.jetapps.jettaskboard.model.BoardModel
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun CreateBoardRoute(
     modifier: Modifier = Modifier,
     createBoardViewModel: CreateBoardViewModel = hiltViewModel(),
     onCancelClick: () -> Unit,
-    navigateToBoardScreen: () -> Unit,
+    navigateToTaskBoardScreen: (Long) -> Unit,
 ) {
-    var boardTitle by remember {
-        mutableStateOf<String>("")
-    }
+    var boardTitle by remember { mutableStateOf("") }
 
     Scaffold(topBar = {
         CreateBoardTopBar(
             title = "Create Board",
             onCancelClick = onCancelClick,
             onCreateBoardClick = {
+                val timestampAsId = System.currentTimeMillis()
                 if (boardTitle.isBlank().not()) {
                     createBoardViewModel.createNewBoard(
                         BoardModel(
+                            id = timestampAsId,
                             title = boardTitle
                         )
                     )
                     boardTitle = ""
-                    navigateToBoardScreen()
+                    navigateToTaskBoardScreen(timestampAsId)
                 }
             }
         )
@@ -51,14 +54,17 @@ fun CreateBoardRoute(
             modifier = modifier
                 .padding(paddingValues)
                 .background(MaterialTheme.colors.background)
-                .fillMaxSize(),
+                .fillMaxSize()
+                .padding(24.dp),
         ) {
             CreateFormEditText(
-                hint = "Board Name",
+                hint = "New Task Board name",
                 onValueChanged = { value ->
                     boardTitle = value
                 }
             )
+
+            Spacer(modifier = modifier.height(24.dp))
 
             CreateFormDropDown(
                 headingText = "Visibility",

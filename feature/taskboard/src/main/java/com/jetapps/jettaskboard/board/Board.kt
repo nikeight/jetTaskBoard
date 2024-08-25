@@ -79,7 +79,7 @@ fun Board(
                         onTaskCardClick = navigateToCreateCard,
                         onAddCardClick = {
                             list.listId?.let { validId ->
-                                viewModel.addNewCardInList(validId)
+                                viewModel.addNewCardInList(validId.toInt())
                             }
                         }
                     )
@@ -110,7 +110,7 @@ fun Lists(
                 color = Color(0xFF222222),
                 shape = RoundedCornerShape(2)
             ),
-        listId = listModel.listId ?: 0
+        listId = listModel.listId?.toInt() ?: 0
     ) { isInBound, _ ->
         Column(
             modifier = Modifier
@@ -121,7 +121,7 @@ fun Lists(
                 .padding(if (isExpandedScreen) 8.dp else 4.dp)
         ) {
             ListHeader(
-                name = listModel.title
+                name = listModel.title ?: ""
             )
             ListBody(
                 modifier = Modifier,
@@ -146,12 +146,12 @@ fun ListBody(
     LazyColumn(
         modifier = Modifier
     ) {
-        items(listModel.cards) { card ->
+        items(listModel.cards ?: emptyList()) { card ->
             DragSurface(
                 modifier = modifier
                     .fillMaxWidth()
                     .animateItemPlacement(),
-                cardId = card.id,
+                cardId = card.id.toInt(),
                 cardListId = card.listId ?: 0
             ) {
                 TaskCard(

@@ -1,7 +1,10 @@
 package com.jetapps.jettaskboard.navigation
 
+import androidx.navigation.NavArgument
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.jetapps.jettaskboard.JtbNavDestination
 import com.jetapps.jettaskboard.board.TaskBoardRoute
 
@@ -16,12 +19,21 @@ fun NavGraphBuilder.taskBoardGraph(
     navigateToChangeBackgroundScreen: (String) -> Unit = {},
     onBackClick: () -> Unit
 ) {
-    composable(route = TaskBoardDestination.route) {
+    composable(
+        route = TaskBoardDestination.route + "/{boardId}",
+        arguments = listOf(
+            navArgument("boardId") {
+                type = NavType.LongType
+                defaultValue = 0
+            },
+        )
+    ) { backStackEntry ->
         TaskBoardRoute(
             isExpandedScreen = isExpandedScreen,
             navigateToCreateCard = navigateToCreateCard,
             onBackClick = onBackClick,
-            navigateToChangeBackgroundScreen = navigateToChangeBackgroundScreen
+            navigateToChangeBackgroundScreen = navigateToChangeBackgroundScreen,
+            boardId = backStackEntry.arguments?.getLong("boardId")
         )
     }
 }

@@ -47,10 +47,10 @@ fun JtbNavHost(
     ) {
         dashboardGraph(
             isExpandedScreen = isExpandedScreen,
-            navigateToTaskBoard = {
+            navigateToTaskBoard = { boardId ->
                 onNavigateToDestination(
                     TaskBoardDestination,
-                    TaskBoardDestination.route
+                    TaskBoardDestination.route + "/$boardId"
                 )
             },
             navigateToCreateCard = {
@@ -98,10 +98,13 @@ fun JtbNavHost(
 
         createBoardGraph(
             onBackClick = onBackClick,
-            navigateToBoardRoute = {
+            navigateToBoardRoute = {passedId ->
+                // Clear the Create Board Screen then only
+                // Navigate to the TaskBoard Screen
+                navController.popBackStack()
                 onNavigateToDestination(
                     TaskBoardDestination,
-                    TaskBoardDestination.route,
+                    TaskBoardDestination.route + "/$passedId",
                 )
             }
         )

@@ -61,8 +61,7 @@ fun CreateFormDropDown(
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.Start
     ) {
         Column(
