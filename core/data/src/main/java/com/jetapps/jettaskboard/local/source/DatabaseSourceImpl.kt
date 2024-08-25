@@ -47,7 +47,9 @@ class DatabaseSourceImpl @Inject constructor(
     }
 
     override suspend fun updateCard(cardEntity: CardEntity) {
-        cardDao.updateCard(cardEntity)
+        withContext(Dispatchers.IO) {
+            cardDao.updateCard(cardEntity)
+        }
     }
 
     override suspend fun createCard(cardEntity: CardEntity) {
@@ -78,5 +80,7 @@ class DatabaseSourceImpl @Inject constructor(
         labelDao.deleteLabel(labelEntity)
     }
 
-
+    override suspend fun getCardDetails(cardId: Long): CardEntity {
+        return cardDao.fetchCardDetails(cardId)
+    }
 }

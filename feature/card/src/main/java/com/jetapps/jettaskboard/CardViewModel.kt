@@ -5,13 +5,16 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jetapps.jettaskboard.model.CardModel
 import com.jetapps.jettaskboard.model.LabelModel
+import com.jetapps.jettaskboard.model.labelModelList
 import com.jetapps.jettaskboard.state.CardDetailState
 import com.jetapps.jettaskboard.theme.LabelBlue
 import com.jetapps.jettaskboard.theme.LabelGreen
@@ -21,6 +24,8 @@ import com.jetapps.jettaskboard.theme.LabelViolet
 import com.jetapps.jettaskboard.theme.LabelYellow
 import com.jetapps.jettaskboard.uimodel.CardDetail
 import com.jetapps.jettaskboard.uimodel.LabelColor
+import com.jetapps.jettaskboard.usecase.board.FetchCardDetailsUseCase
+import com.jetapps.jettaskboard.usecase.board.UpdateCardUseCase
 import com.jetapps.jettaskboard.usecase.dashboard.CreateCardUseCase
 import com.jetapps.jettaskboard.usecase.dashboard.FetchAllBoardsUseCase
 import com.jetapps.jettaskboard.usecase.dashboard.FetchAllListsRelatedToBoardUseCase
@@ -34,17 +39,24 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CardViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val fetchAllListsUseCase: FetchAllListsUseCase,
     private val fetchAllListsRelatedToBoardUseCase: FetchAllListsRelatedToBoardUseCase,
     private val fetchAllBoardsUseCase: FetchAllBoardsUseCase,
-    private val createCardUseCase: CreateCardUseCase
+    private val createCardUseCase: CreateCardUseCase,
+    private val updateCardUseCase: UpdateCardUseCase,
+    private val fetchCardDetailsUseCase: FetchCardDetailsUseCase,
 ) : ViewModel() {
+
+    private val passedBoardId = savedStateHandle.get<Long>("boardId")
+    private val passedListId = savedStateHandle.get<Long>("listId")
+    private val passedCardId = savedStateHandle.get<Long>("cardId")
 
     private val _cardDetailState: MutableStateFlow<CardDetailState> =
         MutableStateFlow(CardDetailState())
     val cardDetailState: StateFlow<CardDetailState> = _cardDetailState
 
-    val cardModel by mutableStateOf(CardDetail(coverImageUrl = "fsd"))
+    var cardModel by mutableStateOf(CardDetail())
 
     val imageAttachmentList = mutableStateListOf<Uri>()
 
@@ -61,8 +73,6 @@ class CardViewModel @Inject constructor(
 
     var isLabelRowClicked = mutableStateOf(false)
 
-    var inputValue = mutableStateOf(TextFieldValue(cardModel.description ?: ""))
-
     val isTopText = mutableStateOf(false)
 
     val isBottomText = mutableStateOf(false)
@@ -70,6 +80,12 @@ class CardViewModel @Inject constructor(
     val startDateText = mutableStateOf(cardModel.startDate ?: "Start Date...")
 
     val dueDateText = mutableStateOf(cardModel.dueDate ?: "Due Date...")
+
+    init {
+        passedCardId?.let { cardId ->
+            fetchCardDetails(cardId)
+        }
+    }
 
     /**
      * Fetching all the boards when
@@ -133,6 +149,50 @@ class CardViewModel @Inject constructor(
             }
             Timber.tag("TAG").d("CardModel %s", cardModel)
             createCardUseCase.invoke(cardModel)
+        }
+    }
+
+    fun updateCard() {
+        println("Passing Arguments : Board id -> $passedBoardId, ListId -> $passedListId and Card id -> $passedCardId")
+        viewModelScope.launch {
+            passedCardId?.let { safeCardId ->
+                updateCardUseCase.invoke(
+                    with(cardModel) {
+                        CardModel(
+                            id = safeCardId,
+                            title = title ?: "...",
+                            description = description,
+                            coverImageUrl = coverImageUrl,
+                            labels = labelModelList,
+                            boardId = passedBoardId ?: 0,
+                            authorId = authorName,
+                            listId = passedListId ?: 0,
+                        )
+                    },
+                )
+            }
+        }
+    }
+
+    private fun fetchCardDetails(cardId: Long) {
+        viewModelScope.launch {
+            val fetchCardDetails = fetchCardDetailsUseCase.invoke(cardId)
+            println("Card Details $fetchCardDetails")
+            val newModel = with(fetchCardDetails) {
+                CardDetail(
+                    id = id,
+                    boardId = boardId,
+                    title = title,
+                    description = description,
+                    coverImageUrl = coverImageUrl,
+                    boardName = boardId.toString(),
+                    listName = listId.toString(),
+                    authorName = authorId.toString(),
+                    startDate = startDate,
+                    dueDate = dueDate
+                )
+            }
+            cardModel = newModel
         }
     }
 }

@@ -45,9 +45,10 @@ import com.jetapps.jettaskboard.theme.SecondaryColor
 @Composable
 fun Board(
     modifier: Modifier = Modifier,
-    navigateToCreateCard: (String) -> Unit = {},
+    navigateToCreateCard: (boardId: Long, listId: Long, cardId: Long) -> Unit = { a, b, c -> },
     viewModel: TaskBoardViewModel,
-    isExpandedScreen: Boolean
+    isExpandedScreen: Boolean,
+    boardId: Long,
 ) {
     val boardState = remember { DragAndDropState(isExpandedScreen) }
     val boardList by viewModel.lists.collectAsState()
@@ -79,9 +80,9 @@ fun Board(
                         onTaskCardClick = navigateToCreateCard,
                         onAddCardClick = {
                             list.listId?.let { validId ->
-                                viewModel.addNewCardInList(validId.toInt())
+                                viewModel.addNewCardInList(validId)
                             }
-                        }
+                        }, boardId = boardId
                     )
                 }
             }
@@ -99,9 +100,10 @@ fun Board(
 fun Lists(
     boardState: DragAndDropState,
     listModel: ListModel,
-    onTaskCardClick: (String) -> Unit,
+    onTaskCardClick: (boardId: Long, listId: Long, cardId: Long) -> Unit,
     onAddCardClick: () -> Unit,
-    isExpandedScreen: Boolean
+    isExpandedScreen: Boolean,
+    boardId: Long
 ) {
     DropSurface(
         modifier = Modifier
@@ -128,7 +130,8 @@ fun Lists(
                 listModel = listModel,
                 onTaskCardClick = onTaskCardClick,
                 onAddCardClick = onAddCardClick,
-                isExpandedScreen = isExpandedScreen
+                isExpandedScreen = isExpandedScreen,
+                boardId = boardId
             )
         }
     }
@@ -139,9 +142,10 @@ fun Lists(
 fun ListBody(
     modifier: Modifier,
     listModel: ListModel,
-    onTaskCardClick: (String) -> Unit,
+    onTaskCardClick: (boardId: Long, listId: Long, cardId: Long) -> Unit,
     onAddCardClick: () -> Unit,
-    isExpandedScreen: Boolean
+    isExpandedScreen: Boolean,
+    boardId: Long,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -152,11 +156,15 @@ fun ListBody(
                     .fillMaxWidth()
                     .animateItemPlacement(),
                 cardId = card.id.toInt(),
-                cardListId = card.listId ?: 0
+                cardListId = card.listId.toInt() ?: 0
             ) {
                 TaskCard(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = { onTaskCardClick("1") },
+                    onClick = {
+                        onTaskCardClick(
+                            boardId, listModel.listId ?: 0, card.id
+                        )
+                    },
                     card = card,
                     isExpandedScreen = isExpandedScreen
                 )

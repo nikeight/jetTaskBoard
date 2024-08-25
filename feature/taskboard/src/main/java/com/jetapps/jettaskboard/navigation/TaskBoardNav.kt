@@ -15,7 +15,7 @@ object TaskBoardDestination : JtbNavDestination {
 
 fun NavGraphBuilder.taskBoardGraph(
     isExpandedScreen: Boolean,
-    navigateToCreateCard: (String) -> Unit = {},
+    navigateToCreateCard: (boardId: Long, listId: Long, cardId: Long) -> Unit,
     navigateToChangeBackgroundScreen: (String) -> Unit = {},
     onBackClick: () -> Unit
 ) {

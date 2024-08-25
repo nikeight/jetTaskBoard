@@ -59,7 +59,7 @@ fun TaskBoardRoute(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     isExpandedScreen: Boolean,
-    navigateToCreateCard: (String) -> Unit = {},
+    navigateToCreateCard: (boardId: Long, listId: Long, cardId: Long) -> Unit,
     navigateToChangeBackgroundScreen: (String) -> Unit = {},
     backgroundColor: Color = MaterialTheme.colors.surface,
     viewModel: TaskBoardViewModel = hiltViewModel(),
@@ -145,7 +145,8 @@ fun TaskBoardRoute(
                         modifier = Modifier.fillMaxSize(),
                         navigateToCreateCard = navigateToCreateCard,
                         viewModel = viewModel,
-                        isExpandedScreen = isExpandedScreen
+                        isExpandedScreen = isExpandedScreen,
+                        boardId = boardId ?: 0
                     )
                 }
 

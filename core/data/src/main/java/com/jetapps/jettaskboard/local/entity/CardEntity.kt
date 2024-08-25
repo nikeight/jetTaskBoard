@@ -9,13 +9,13 @@ import androidx.room.PrimaryKey
 )
 data class CardEntity(
     @PrimaryKey(autoGenerate = true)
-    val cardId: Long,
+    val cardId: Long = 0,
     val title: String,
     val description: String?,
     @ColumnInfo(name = "column_image_url")
     val coverImageUrl: String?,
     val boardId: Long,
-    val listId: Int,
+    val listId: Long,
     @ColumnInfo(name = "author_id")
     val authorId: String?,
     @ColumnInfo(name = "start_date")

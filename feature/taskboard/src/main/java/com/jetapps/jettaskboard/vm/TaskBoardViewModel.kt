@@ -33,12 +33,12 @@ class TaskBoardViewModel @Inject constructor(
     private val getLatestBackgroundImgUrlUseCase: GetLatestBackgroundImgUrlUseCase,
     private val getBoardDetailsUseCase: GetBoardDetailsUseCase,
     private val createCardUseCase: CreateCardUseCase,
-    private val updateCardUseCase: UpdateCardUseCase,
     private val deleteCardUseCase: DeleteCardUseCase,
     private val createNewListUseCase: CreateNewListUseCase,
 ) : ViewModel() {
 
     private val passedBoardId = savedStateHandle.get<Long>("boardId")
+        get() = field
 
     /**
      * Defines a list of [ListModel]s which has a list of [CardModel]s internally.
@@ -48,12 +48,6 @@ class TaskBoardViewModel @Inject constructor(
     private val _lists: MutableStateFlow<List<ListModel>> = MutableStateFlow(emptyList())
     val lists: StateFlow<List<ListModel>> = _lists
 
-    /**
-     * A counter of the total number of cards in the board, maintained to assign a unique
-     * index everytime a new card gets added to the board in a particular list, which in also
-     * used to run recomposition whenever the new card is added.
-     */
-    private var totalCards by mutableIntStateOf(0)
     var boardTitle by mutableStateOf("Board Dummy Title")
     var latestBackgroundImgUri by mutableStateOf("")
 
@@ -101,18 +95,13 @@ class TaskBoardViewModel @Inject constructor(
         }
     }
 
-    fun addNewCardInList(listId: Int) {
+    fun addNewCardInList(listId: Long) {
         viewModelScope.launch {
-            totalCards = 0
-            updateTheTotalCardCount(_lists.value.size + 1)
             createCardUseCase.invoke(
                 CardModel(
-                    id = totalCards.toLong(),
                     title = "New Card",
                     listId = listId,
                     description = "",
-                    coverImageUrl = "",
-                    labels = emptyList(),
                     boardId = passedBoardId ?: 0,
                     authorId = ""
                 ),
@@ -136,7 +125,7 @@ class TaskBoardViewModel @Inject constructor(
                 _lists.value.find { it.listId?.toInt() == oldListId }?.cards?.removeIf { it.id == safeCard.id }
                 _lists.value.find { it.listId?.toInt() == newListId }?.cards?.add(
                     safeCard.copy(
-                        listId = newListId
+                        listId = newListId.toLong()
                     )
                 )
             }
@@ -157,9 +146,5 @@ class TaskBoardViewModel @Inject constructor(
 
     fun changeExpandedScreenState(newState: ExpandedBoardDrawerState) {
         _drawerScreenState.value = newState
-    }
-
-    private fun updateTheTotalCardCount(newValue: Int) {
-        totalCards = newValue
     }
 }

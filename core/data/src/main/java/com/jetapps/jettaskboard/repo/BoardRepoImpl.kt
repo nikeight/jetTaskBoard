@@ -6,6 +6,7 @@ import com.jetapps.jettaskboard.local.source.DatabaseSource
 import com.jetapps.jettaskboard.mapper.BoardMapper
 import com.jetapps.jettaskboard.mapper.CardMapper
 import com.jetapps.jettaskboard.mapper.ListMapper
+import com.jetapps.jettaskboard.mapper.mapToDomain
 import com.jetapps.jettaskboard.model.BoardWithListAndCard
 import com.jetapps.jettaskboard.model.CardModel
 import com.jetapps.jettaskboard.model.ListModel
@@ -67,7 +68,7 @@ class BoardRepoImpl @Inject constructor(
     }
 
     override suspend fun updateCard(cardModel: CardModel) {
-        databaseSource.updateCard(cardMapper.mapToData(cardModel))
+        databaseSource.updateCard(cardModel.mapToDomain())
     }
 
     override suspend fun deleteCard(cardModel: CardModel) {

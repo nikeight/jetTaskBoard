@@ -21,4 +21,5 @@ interface DatabaseSource {
     suspend fun deleteList(listEntity: ListEntity)
     suspend fun createLabel(labelEntity: LabelEntity)
     suspend fun deleteLabel(labelEntity: LabelEntity)
+    suspend fun getCardDetails(cardId : Long) : CardEntity
 }
