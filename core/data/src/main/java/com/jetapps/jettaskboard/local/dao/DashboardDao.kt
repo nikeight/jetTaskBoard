@@ -32,5 +32,5 @@ interface DashboardDao {
     fun getAllLists(): List<ListEntity>
 
     @Query("SELECT * FROM listTable where boardId = :boardId")
-    fun getAllBoardRelatedLists(boardId: Int): List<ListEntity>
+    fun getAllBoardRelatedLists(boardId: Long): List<ListEntity>
 }

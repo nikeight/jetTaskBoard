@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.jetapps.jettaskboard.CreateFormDropDown
 import com.jetapps.jettaskboard.createboard.CreateBoardViewModel.Companion.visibilityList
 import com.jetapps.jettaskboard.createboard.components.CreateBoardTopBar
 import com.jetapps.jettaskboard.createboard.components.CreateFormEditText
@@ -21,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.unit.dp
+import com.jetapps.jettaskboard.CreateVisibilityFormDropDown
 
 @Composable
 fun CreateBoardRoute(
@@ -66,7 +66,7 @@ fun CreateBoardRoute(
 
             Spacer(modifier = modifier.height(24.dp))
 
-            CreateFormDropDown(
+            CreateVisibilityFormDropDown(
                 headingText = "Visibility",
                 contentMap = visibilityList
             )

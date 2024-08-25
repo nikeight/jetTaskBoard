@@ -42,7 +42,7 @@ class DatabaseSourceImpl @Inject constructor(
         return dashboardDao.getAllLists()
     }
 
-    override suspend fun getAllListsRelatedToBoard(boardId: Int): List<ListEntity> {
+    override suspend fun getAllListsRelatedToBoard(boardId: Long): List<ListEntity> {
         return dashboardDao.getAllBoardRelatedLists(boardId)
     }
 
