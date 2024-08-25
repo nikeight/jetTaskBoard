@@ -132,9 +132,9 @@ class TaskBoardViewModel @Inject constructor(
         }
     }
 
-    fun addNewList() {
+    fun addNewList(listTitle: String) {
         val model = ListModel(
-            title = "New List",
+            title = listTitle,
             boardId = passedBoardId
         )
         viewModelScope.launch {
